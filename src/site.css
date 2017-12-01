@@ -1,0 +1,22 @@
+.pt-transition-container {
+  margin-top: 18px;
+}
+
+.root {
+  min-height: 100vh;
+}
+
+.root.pt-dark {
+  background-color: #293742;
+}
+
+.pt-form-group.pt-inline .pt-form-content,
+.pt-form-group.pt-inline .pt-form-content .pt-input-group {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.pt-form-group.pt-inline.formgroup-no-label label.pt-label {
+  margin: 0;
+}
