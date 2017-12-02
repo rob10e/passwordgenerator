@@ -1,3 +1,18 @@
+.pt-navbar {
+  -ms-overflow-style: scrollbar;
+  -webkit-app-region:drag;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="text"],
+select,
+button,
+textarea {
+	-webkit-app-region: no-drag;
+}
+
 .pt-transition-container {
   margin-top: 18px;
 }

@@ -9,8 +9,11 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    frame: false,
     width: 800,
-    height: 600,
+    height: 700,
+    minWidth: 600,
+    minHeight: 700
   });
 
   // and load the index.html of the app.

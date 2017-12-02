@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-import {
-  FormGroup,
-  Card,
-  Button,
-  Colors,
-  InputGroup,
-  Classes,
-  Intent,
-  Tag,
-} from '@blueprintjs/core';
+import { FormGroup, Card, Button, InputGroup, Classes, Intent, Tag } from '@blueprintjs/core';
 import { copy } from 'copy-paste';
 import OurToaster from '../Toaster';
 import RandomGenerator from '../RandomGenerator';
