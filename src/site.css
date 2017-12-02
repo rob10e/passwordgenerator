@@ -20,3 +20,12 @@
 .pt-form-group.pt-inline.formgroup-no-label label.pt-label {
   margin: 0;
 }
+
+.pt-dark .pt-select.pt-minimal select.select-as-h5 {
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  line-height: 0.9em;
+  font-size: 17px;
+  color: rgb(61, 204, 145);
+}
