@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { remote } from 'electron';
 import { Button, Icon, InputGroup, Tooltip, Position } from '@blueprintjs/core';
 import OurToaster from './Toaster';
+import { addNewProfile } from './Redux/profilesActions';
+import { selectProfile } from './Redux/currentOptionsActions';
 
-class Header extends Component {
+class MainHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentProfile: 'default',
       profileEditMode: false,
       profileNewName: '',
-      profiles: [],
     };
   }
 
   handleSaveProfile() {
     const profile = this.state.profileNewName;
+    this.props.addNewProfile(profile, this.props.current.generatorName, this.props.current.options);
     this.setState({
-      profiles: [...this.state.profiles, profile],
       profileEditMode: false,
-      currentProfile: profile,
     });
     OurToaster.show({ message: `Saved new profile: ${profile}` });
   }
@@ -58,8 +59,8 @@ class Header extends Component {
           <option key="default" value="default">
             -- Select profile --
           </option>
-          {this.state.profiles.length > 0
-            ? this.state.profiles.map(item => (
+          {this.props.profiles.length > 0
+            ? this.props.profiles.map(item => (
               <option key={`${item}_key`} value={item}>
                 {`${item}`}
               </option>
@@ -79,10 +80,10 @@ class Header extends Component {
           <div className="pt-navbar-heading">Password Generator</div>
         </div>
         <div className="pt-navbar-group pt-align-right">
-        <Tooltip position={Position.BOTTOM} content="Add new profile">
-          <Button className="pt-minimal">
-            <Icon iconName="plus" onClick={() => this.setState({ profileEditMode: true })} />
-          </Button>
+          <Tooltip position={Position.BOTTOM} content="Add new profile">
+            <Button className="pt-minimal">
+              <Icon iconName="plus" onClick={() => this.setState({ profileEditMode: true })} />
+            </Button>
           </Tooltip>
           {this.renderProfileSelector()}
           <span className="pt-navbar-divider" />
@@ -110,4 +111,22 @@ class Header extends Component {
   }
 }
 
-export default Header;
+MainHeader.propTypes = {
+  current: PropTypes.any,
+  profiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      profileName: PropTypes.string,
+      generatorName: PropTypes.string,
+      options: PropTypes.any,
+    }),
+  ),
+  addNewProfile: PropTypes.func.isRequired,
+  selectProfile: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  profiles: state.profiles,
+  current: state.currentOptions,
+});
+
+export default connect(mapStateToProps, { addNewProfile, selectProfile })(MainHeader);

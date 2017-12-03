@@ -96,12 +96,15 @@
     "electron-compile": "^6.4.2",
     "lodash": "^4.17.4",
     "node-clipboard": "^1.2.0",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^3.0.0",
+    "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",
@@ -112,6 +115,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "cross-env": "^5.1.1",
+    "electron-devtools-installer": "^2.2.1",
     "electron-forge": "^4.1.5",
     "electron-prebuilt-compile": "1.7.9",
     "electron-react-devtools": "^0.5.2",
@@ -119,6 +123,9 @@
     "eslint-config-airbnb": "15",
     "eslint-plugin-import": "2",
     "eslint-plugin-jsx-a11y": "5",
-    "eslint-plugin-react": "7"
+    "eslint-plugin-react": "7",
+    "redux-devtools": "^3.4.1",
+    "redux-devtools-dock-monitor": "^1.1.2",
+    "redux-devtools-log-monitor": "^1.4.0"
   }
 }

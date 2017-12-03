@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import {
   FormGroup,
   Switch,
@@ -10,65 +13,46 @@ import {
   Position,
 } from '@blueprintjs/core';
 import RandomPasswordGenerator from './../utils/RandomPasswordGenerator';
+import { updateGeneratorOptions } from './Redux/currentOptionsActions';
 
 // TODO: Add more constrain checking
 
 class RandomGenerator extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      upperCase: true,
-      lowerCase: true,
-      digits: true,
-      minus: false,
-      underline: false,
-      space: false,
-      special: false,
-      brackets: false,
-      highAnsi: false,
-      upperCaseMinimum: true,
-      lowerCaseMinimum: true,
-      digitsMinimum: true,
-      minusMinimum: false,
-      underlineMinimum: false,
-      spaceMinimum: false,
-      specialMinimum: false,
-      bracketsMinimum: false,
-      highAnsiMinimum: false,
-      length: 20,
-      byEntropy: false,
-      byLength: true,
-      entropy: 128,
-      customCharacters: '',
-    };
     this.passwordGenerator = new RandomPasswordGenerator();
   }
 
+  setOptions(options) {
+    this.props.updateGeneratorOptions(null, { ...this.props.options, ...options });
+  }
+
   render() {
+    const options = this.props.options;
     return (
       <div>
         <FormGroup inline className="formgroup-no-label">
           <div className="pt-control-group pt-fill">
             <Switch
               label="Length:"
-              checked={this.state.byLength}
+              checked={options.byLength}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   byLength: event.target.checked,
                   byEntropy: !event.target.checked,
                 });
               }}
             />
             <NumericInput
-              disabled={!this.state.byLength}
-              value={this.state.length}
+              disabled={!options.byLength}
+              value={options.length}
               min={5}
               max={80}
               clampValueOnBlur
               minorStepSize={1}
               onValueChange={value =>
-                this.setState({
+                this.setOptions({
                   length: value,
                 })
               }
@@ -79,23 +63,23 @@ class RandomGenerator extends Component {
           <div className="pt-control-group pt-fill">
             <Switch
               label="Entropy:"
-              checked={this.state.byEntropy}
+              checked={options.byEntropy}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   byEntropy: event.target.checked,
                   byLength: !event.target.checked,
                 });
               }}
             />
             <NumericInput
-              disabled={!this.state.byEntropy}
-              value={this.state.entropy}
+              disabled={!options.byEntropy}
+              value={options.entropy}
               min={30}
               max={4096}
               clampValueOnBlur
               onValueChange={value =>
-                this.setState({
+                this.setOptions({
                   entropy: value,
                 })
               }
@@ -106,103 +90,123 @@ class RandomGenerator extends Component {
           <div className="pt-control-group pt-vertical" style={{ width: '40%' }}>
             <Switch
               label="Upper Case"
-              checked={this.state.upperCase}
+              checked={options.upperCase}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   upperCase: event.target.checked,
                 });
               }}
             />
             <Switch
               label="Lower Case"
-              checked={this.state.lowerCase}
+              checked={options.lowerCase}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   lowerCase: event.target.checked,
                 });
               }}
             />
             <Switch
               label="Digits"
-              checked={this.state.digits}
+              checked={options.digits}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   digits: event.target.checked,
                 });
               }}
             />
             <Switch
               label="Minus"
-              checked={this.state.minus}
+              checked={options.minus}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   minus: event.target.checked,
                 });
               }}
             />
             <Switch
               label="Underline"
-              checked={this.state.underline}
+              checked={options.underline}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   underline: event.target.checked,
                 });
               }}
             />
           </div>
           <div className="pt-control-group pt-vertical" style={{ width: '10%' }}>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 uppercase character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 uppercase character"
+            >
               <Checkbox
-                disabled={!this.state.upperCase}
-                checked={this.state.upperCaseMinimum}
+                disabled={!options.upperCase}
+                checked={options.upperCaseMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ upperCaseMinimum: event.target.checked });
+                  this.setOptions({ upperCaseMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 lowercase character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 lowercase character"
+            >
               <Checkbox
-                disabled={!this.state.lowerCase}
-                checked={this.state.lowerCaseMinimum}
+                disabled={!options.lowerCase}
+                checked={options.lowerCaseMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ lowerCaseMinimum: event.target.checked });
+                  this.setOptions({ lowerCaseMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 numeric character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 numeric character"
+            >
               <Checkbox
-                disabled={!this.state.digits}
-                checked={this.state.digitMinimum}
+                disabled={!options.digits}
+                checked={options.digitMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ digitMinimum: event.target.checked });
+                  this.setOptions({ digitMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 minus character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 minus character"
+            >
               <Checkbox
-                disabled={!this.state.minus}
-                checked={this.state.minusMinimum}
+                disabled={!options.minus}
+                checked={options.minusMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ minusMinimum: event.target.checked });
+                  this.setOptions({ minusMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 underline character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 underline character"
+            >
               <Checkbox
-                disabled={!this.state.underline}
-                checked={this.state.underlineMinimum}
+                disabled={!options.underline}
+                checked={options.underlineMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ underlineMinimum: event.target.checked });
+                  this.setOptions({ underlineMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
@@ -210,83 +214,99 @@ class RandomGenerator extends Component {
           <div className="pt-control-group pt-vertical" style={{ width: '40%' }}>
             <Switch
               label="Space"
-              checked={this.state.space}
+              checked={options.space}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   space: event.target.checked,
                 });
               }}
             />
             <Switch
               label="Special"
-              checked={this.state.special}
+              checked={options.special}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   special: event.target.checked,
                 });
               }}
             />
             <Switch
               label="Brackets"
-              checked={this.state.brackets}
+              checked={options.brackets}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   brackets: event.target.checked,
                 });
               }}
             />
             <Switch
               label="High ANSI characters"
-              checked={this.state.highAnsi}
+              checked={options.highAnsi}
               onChange={(event) => {
                 event.persist();
-                this.setState({
+                this.setOptions({
                   highAnsi: event.target.checked,
                 });
               }}
             />
           </div>
           <div className="pt-control-group pt-vertical" style={{ width: '10%' }}>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 space character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 space character"
+            >
               <Checkbox
-                disabled={!this.state.space}
-                checked={this.state.spaceMinimum}
+                disabled={!options.space}
+                checked={options.spaceMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ spaceMinimum: event.target.checked });
+                  this.setOptions({ spaceMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 special character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 special character"
+            >
               <Checkbox
-                disabled={!this.state.special}
-                checked={this.state.specialMinimum}
+                disabled={!options.special}
+                checked={options.specialMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ specialMinimum: event.target.checked });
+                  this.setOptions({ specialMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 bracket character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 bracket character"
+            >
               <Checkbox
-                disabled={!this.state.brackets}
-                checked={this.state.bracketMinimum}
+                disabled={!options.brackets}
+                checked={options.bracketMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ bracketMinimum: event.target.checked });
+                  this.setOptions({ bracketMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
-            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 high ANSI character">
+            <Tooltip
+              className="tooltip-fix"
+              position={Position.TOP}
+              content="Ensure at least 1 high ANSI character"
+            >
               <Checkbox
-                disabled={!this.state.highAnsi}
-                checked={this.state.highAnsiMinimum}
+                disabled={!options.highAnsi}
+                checked={options.highAnsiMinimum}
                 onChange={(event) => {
                   event.persist();
-                  this.setState({ highAnsiMinimum: event.target.checked });
+                  this.setOptions({ highAnsiMinimum: event.target.checked });
                 }}
               />
             </Tooltip>
@@ -295,12 +315,12 @@ class RandomGenerator extends Component {
         <FormGroup label="Also include these:" labelFor="text-input">
           <InputGroup
             placeholder="Custom characters"
-            value={this.state.customCharacters}
+            value={options.customCharacters}
             onChange={(event) => {
               event.persist();
               let value = event.target.value;
               value = value.replace(/ /, '\u00a0');
-              this.setState({
+              this.setOptions({
                 customCharacters: value,
               });
             }}
@@ -309,7 +329,7 @@ class RandomGenerator extends Component {
         <Button
           text="Generate"
           onClick={() => {
-            this.props.onGenerate(this.passwordGenerator.generateBasic(this.state));
+            this.props.onGenerate(this.passwordGenerator.generateBasic(options));
           }}
         />
       </div>
@@ -317,4 +337,38 @@ class RandomGenerator extends Component {
   }
 }
 
-export default RandomGenerator;
+RandomGenerator.propTypes = {
+  onGenerate: PropTypes.func.isRequired,
+  updateGeneratorOptions: PropTypes.func.isRequired,
+  options: PropTypes.shape({
+    brackets: PropTypes.bool,
+    bracketsMinimum: PropTypes.bool,
+    byEntropy: PropTypes.bool,
+    byLength: PropTypes.bool,
+    customCharacters: PropTypes.string,
+    digits: PropTypes.bool,
+    digitsMinimum: PropTypes.bool,
+    entropy: PropTypes.number,
+    highAnsi: PropTypes.bool,
+    highAnsiMinimum: PropTypes.bool,
+    length: PropTypes.number,
+    lowerCase: PropTypes.bool,
+    lowerCaseMinimum: PropTypes.bool,
+    minus: PropTypes.bool,
+    minusMinimum: PropTypes.bool,
+    space: PropTypes.bool,
+    spaceMinimum: PropTypes.bool,
+    special: PropTypes.bool,
+    specialMinimum: PropTypes.bool,
+    underline: PropTypes.bool,
+    underlineMinimum: PropTypes.bool,
+    upperCase: PropTypes.bool,
+    upperCaseMinimum: PropTypes.bool,
+  }),
+};
+
+const mapStateToProps = state => ({
+  options: state.currentOptions.options,
+});
+
+export default connect(mapStateToProps, { updateGeneratorOptions })(RandomGenerator);

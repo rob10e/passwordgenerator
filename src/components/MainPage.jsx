@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   FormGroup,
   Card,
@@ -10,9 +11,11 @@ import {
   Tooltip,
   Position,
 } from '@blueprintjs/core';
+import { connect } from 'react-redux';
 import { copy } from 'copy-paste';
 import OurToaster from './Toaster';
 import RandomGenerator from './RandomGenerator';
+import { updateGeneratorOptions } from './Redux/currentOptionsActions';
 
 class MainPage extends Component {
   constructor() {
@@ -21,7 +24,6 @@ class MainPage extends Component {
       password: '',
       message: '',
       score: 0,
-      currentGenerator: 'random',
     };
     this.generator = null;
     this.messages = [
@@ -44,7 +46,7 @@ class MainPage extends Component {
   }
 
   renderGenerator() {
-    switch (this.state.currentGenerator) {
+    switch (this.props.currentGenerator) {
       case 'random':
         return <RandomGenerator onGenerate={results => this.setState(results)} />;
       default:
@@ -59,7 +61,8 @@ class MainPage extends Component {
           <div className="pt-select pt-minimal pt-fill">
             <select
               className="select-as-h5"
-              onChange={event => this.setState({ currentGenerator: event.target.value })}
+              value={this.props.currentGenerator}
+              onChange={event => this.props.updateGeneratorOptions(event.target.value)}
             >
               {this.generators.map(item => (
                 <option key={item.index} value={item.value}>
@@ -108,4 +111,13 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+MainPage.propTypes = {
+  currentGenerator: PropTypes.string.isRequired,
+  updateGeneratorOptions: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  currentGenerator: state.currentOptions.generatorName,
+});
+
+export default connect(mapStateToProps, { updateGeneratorOptions })(MainPage);
