@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import 'react-hot-loader/patch';
-//import App from './app';
 
 const render = () => {
   // NB: We have to re-require MyApp every time or else this won't work

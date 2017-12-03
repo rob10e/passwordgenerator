@@ -13,6 +13,10 @@ textarea {
 	-webkit-app-region: no-drag;
 }
 
+.pt-navbar .pt-navbar-group .pt-button .pt-icon-standard{
+  margin-right: 0;
+}
+
 .pt-transition-container {
   margin-top: 18px;
 }
@@ -43,4 +47,9 @@ textarea {
   line-height: 0.9em;
   font-size: 17px;
   color: rgb(61, 204, 145);
+}
+
+.pt-dark .pt-select.pt-minimal select.select-as-h5.select-margin {
+  margin: 0 10px;
+  padding: 0 10px;
 }

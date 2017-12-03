@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
-import { FormGroup, Card, Button, InputGroup, Classes, Intent, Tag } from '@blueprintjs/core';
+import {
+  FormGroup,
+  Card,
+  Button,
+  InputGroup,
+  Classes,
+  Intent,
+  Tag,
+  Tooltip,
+  Position,
+} from '@blueprintjs/core';
 import { copy } from 'copy-paste';
-import OurToaster from '../Toaster';
-import RandomGenerator from '../RandomGenerator';
+import OurToaster from './Toaster';
+import RandomGenerator from './RandomGenerator';
 
 class MainPage extends Component {
   constructor() {
@@ -67,20 +77,24 @@ class MainPage extends Component {
                 value={this.state.password}
                 rightElement={
                   <div>
-                    <Tag className={Classes.MINIMAL}>
-                      {this.messages[this.state.score.strength]}
-                    </Tag>
-                    <Button
-                      className={Classes.MINIMAL}
-                      intent={Intent.WARNING}
-                      iconName="clipboard"
-                      onClick={() => {
-                        copy(this.state.password, (err) => {
-                          if (err) throw err;
-                          OurToaster.show({ message: 'Copied' });
-                        });
-                      }}
-                    />
+                    {this.state.score.strength && (
+                      <Tag className={Classes.MINIMAL}>
+                        {this.messages[this.state.score.strength]}
+                      </Tag>
+                    )}
+                    <Tooltip position={Position.TOP} content="Copy to clipboard">
+                      <Button
+                        className={Classes.MINIMAL}
+                        intent={Intent.WARNING}
+                        iconName="clipboard"
+                        onClick={() => {
+                          copy(this.state.password, (err) => {
+                            if (err) throw err;
+                            OurToaster.show({ message: 'Copied' });
+                          });
+                        }}
+                      />
+                    </Tooltip>
                   </div>
                 }
               />

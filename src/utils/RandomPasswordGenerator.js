@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import passwordScore from './PasswordStrengthTester';
 
 export default class RandomPasswordGenerator {
@@ -14,6 +15,7 @@ export default class RandomPasswordGenerator {
       '¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ';
     this.lookAlike = 'O0l1I|';
     this.cryptoObject = null;
+    this.options = null;
     this.initCrypto();
   }
 
@@ -53,7 +55,26 @@ export default class RandomPasswordGenerator {
     }
   }
 
+  count(phrase, list) {
+    let count = 0;
+    for (let index = 0; index < phrase.length; index++) {
+      const character = phrase[index];
+      if (_.includes(list, character)) count++;
+    }
+
+    return count;
+  }
+
+  checkMinimums(password) {
+    let result = true;
+
+    result &= (this.options.upperCaseMinimum && this.count(password, this.upperCase) > 0);
+
+    return result;
+  }
+
   generateBasic = (options) => {
+    this.options = options;
     let characterSetString = '';
     if (options.brackets) characterSetString += this.brackets;
     if (options.digits) characterSetString += this.digits;
@@ -97,49 +118,52 @@ export default class RandomPasswordGenerator {
       }
     }
 
-    let password = '';
-    let message = '';
-    if (characterSet.length === 0) {
-      message = 'Error: character set is empty';
-    } else if (options.byEntropy && characterSet.length === 1) {
-      message = 'Error: Need at least 2 distinct characters in set';
-    } else {
-      let length = 0;
-      if (options.byLength) {
-        length = options.length;
-      } else if (options.byEntropy) {
-        length = Math.ceil(
-          parseFloat(options.entropy) * Math.log(2) / Math.log(characterSet.length),
-        );
+    let password;
+    let message;
+    do {
+      password = '';
+      message = '';
+      if (characterSet.length === 0) {
+        message = 'Error: character set is empty';
+      } else if (options.byEntropy && characterSet.length === 1) {
+        message = 'Error: Need at least 2 distinct characters in set';
       } else {
-        throw 'Assertion error';
-      }
-
-      if (length < 0) {
-        message = 'Negative password length';
-      } else if (length > 10000) {
-        message = 'Password length too large';
-      } else {
-        for (let i = 0; i < length; i++) {
-          password += characterSet[this.randomInt(characterSet.length)];
-        }
-
-        const entropy = Math.log(characterSet.length) * length / Math.log(2);
-        let entropyString = '';
-        if (entropy < 70) {
-          entropyString = entropy.toFixed(2);
-        } else if (entropy < 200) {
-          entropyString = entropy.toFixed(1);
+        let length = 0;
+        if (options.byLength) {
+          length = options.length;
+        } else if (options.byEntropy) {
+          length = Math.ceil(
+            parseFloat(options.entropy) * Math.log(2) / Math.log(characterSet.length),
+          );
         } else {
-          entropyString = entropy.toFixed(0);
+          throw 'Assertion error';
         }
 
-        message = `Length = ${length} chars, \u00a0Charset size = ${
-          characterSet.length
-        } symbols. \u00a0Entropy = ${entropyString} bits`;
-      }
-    }
+        if (length < 0) {
+          message = 'Negative password length';
+        } else if (length > 10000) {
+          message = 'Password length too large';
+        } else {
+          for (let i = 0; i < length; i++) {
+            password += characterSet[this.randomInt(characterSet.length)];
+          }
 
+          const entropy = Math.log(characterSet.length) * length / Math.log(2);
+          let entropyString = '';
+          if (entropy < 70) {
+            entropyString = entropy.toFixed(2);
+          } else if (entropy < 200) {
+            entropyString = entropy.toFixed(1);
+          } else {
+            entropyString = entropy.toFixed(0);
+          }
+
+          message = `Length = ${length} chars, \u00a0Charset size = ${
+            characterSet.length
+          } symbols. \u00a0Entropy = ${entropyString} bits`;
+        }
+      }
+    } while (this.checkMinimums(password));
     return { password, message, score: passwordScore(password, { minchar: 10 }) };
   };
 }

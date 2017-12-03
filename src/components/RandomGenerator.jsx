@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { FormGroup, Switch, NumericInput, InputGroup, Button } from '@blueprintjs/core';
-import RandomPasswordGenerator from '../../utils/RandomPasswordGenerator';
+import {
+  FormGroup,
+  Switch,
+  NumericInput,
+  InputGroup,
+  Button,
+  Checkbox,
+  Tooltip,
+  Position,
+} from '@blueprintjs/core';
+import RandomPasswordGenerator from './../utils/RandomPasswordGenerator';
 
 class RandomGenerator extends Component {
   constructor(props) {
@@ -15,6 +24,15 @@ class RandomGenerator extends Component {
       special: false,
       brackets: false,
       highAnsi: false,
+      upperCaseMinimum: true,
+      lowerCaseMinimum: true,
+      digitsMinimum: true,
+      minusMinimum: false,
+      underlineMinimum: false,
+      spaceMinimum: false,
+      specialMinimum: false,
+      bracketsMinimum: false,
+      highAnsiMinimum: false,
       length: 20,
       byEntropy: false,
       byLength: true,
@@ -76,9 +94,9 @@ class RandomGenerator extends Component {
           </div>
         </FormGroup>
         <div className="pt-control-group pt-horizontal" style={{ width: '100%', marginTop: 20 }}>
-          <div className="pt-control-group pt-vertical" style={{ width: '50%' }}>
+          <div className="pt-control-group pt-vertical" style={{ width: '40%' }}>
             <Switch
-              label="Upper Case (A, B, C, ...)"
+              label="Upper Case"
               checked={this.state.upperCase}
               onChange={(event) => {
                 event.persist();
@@ -88,7 +106,7 @@ class RandomGenerator extends Component {
               }}
             />
             <Switch
-              label="Lower Case (a, b, c, ...)"
+              label="Lower Case"
               checked={this.state.lowerCase}
               onChange={(event) => {
                 event.persist();
@@ -98,7 +116,7 @@ class RandomGenerator extends Component {
               }}
             />
             <Switch
-              label="Digits (0, 1, 2, ...)"
+              label="Digits"
               checked={this.state.digits}
               onChange={(event) => {
                 event.persist();
@@ -108,7 +126,7 @@ class RandomGenerator extends Component {
               }}
             />
             <Switch
-              label="Minus (-)"
+              label="Minus"
               checked={this.state.minus}
               onChange={(event) => {
                 event.persist();
@@ -118,7 +136,7 @@ class RandomGenerator extends Component {
               }}
             />
             <Switch
-              label="Underline (_)"
+              label="Underline"
               checked={this.state.underline}
               onChange={(event) => {
                 event.persist();
@@ -128,9 +146,56 @@ class RandomGenerator extends Component {
               }}
             />
           </div>
-          <div className="pt-control-group pt-vertical" style={{ width: '50%' }}>
+          <div className="pt-control-group pt-vertical" style={{ width: '10%' }}>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 uppercase character">
+              <Checkbox
+                checked={this.state.upperCaseMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ upperCaseMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 lowercase character">
+              <Checkbox
+                checked={this.state.lowerCaseMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ lowerCaseMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 numeric character">
+              <Checkbox
+                checked={this.state.digitMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ digitMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 minus character">
+              <Checkbox
+                checked={this.state.minusMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ minusMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 underline character">
+              <Checkbox
+                checked={this.state.underlineMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ underlineMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+          </div>
+          <div className="pt-control-group pt-vertical" style={{ width: '40%' }}>
             <Switch
-              label="Space ( )"
+              label="Space"
               checked={this.state.space}
               onChange={(event) => {
                 event.persist();
@@ -140,7 +205,7 @@ class RandomGenerator extends Component {
               }}
             />
             <Switch
-              label="Special (!, $, %, &, ...)"
+              label="Special"
               checked={this.state.special}
               onChange={(event) => {
                 event.persist();
@@ -150,7 +215,7 @@ class RandomGenerator extends Component {
               }}
             />
             <Switch
-              label="Brackets ([, ], (, ), {, }, <, >)"
+              label="Brackets"
               checked={this.state.brackets}
               onChange={(event) => {
                 event.persist();
@@ -170,6 +235,44 @@ class RandomGenerator extends Component {
               }}
             />
           </div>
+          <div className="pt-control-group pt-vertical" style={{ width: '10%' }}>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 space character">
+              <Checkbox
+                checked={this.state.spaceMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ spaceMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 special character">
+              <Checkbox
+                checked={this.state.specialMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ specialMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 bracket character">
+              <Checkbox
+                checked={this.state.bracketMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ bracketMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+            <Tooltip position={Position.RIGHT} content="Ensure at least 1 high ANSI character">
+              <Checkbox
+                checked={this.state.highAnsiMinimum}
+                onChange={(event) => {
+                  event.persist();
+                  this.setState({ highAnsiMinimum: event.target.checked });
+                }}
+              />
+            </Tooltip>
+          </div>
         </div>
         <FormGroup label="Also include these:" labelFor="text-input">
           <InputGroup
@@ -187,9 +290,7 @@ class RandomGenerator extends Component {
         </FormGroup>
         <Button
           text="Generate"
-          onClick={() =>
-            this.props.onGenerate(this.passwordGenerator.generateBasic(this.state))
-          }
+          onClick={() => this.props.onGenerate(this.passwordGenerator.generateBasic(this.state))}
         />
       </div>
     );

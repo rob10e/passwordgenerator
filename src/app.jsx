@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Header from './components/Header';
+import MainHeader from './components/MainHeader';
 import MainPage from './components/MainPage';
 
 const App = () => (
   <div className="root pt-dark">
-    <Header />
+    <MainHeader />
     <MainPage />
   </div>
 );
