@@ -79,9 +79,11 @@ class Header extends Component {
           <div className="pt-navbar-heading">Password Generator</div>
         </div>
         <div className="pt-navbar-group pt-align-right">
+        <Tooltip position={Position.BOTTOM} content="Add new profile">
           <Button className="pt-minimal">
             <Icon iconName="plus" onClick={() => this.setState({ profileEditMode: true })} />
           </Button>
+          </Tooltip>
           {this.renderProfileSelector()}
           <span className="pt-navbar-divider" />
           <Tooltip position={Position.BOTTOM} content="Minimize">

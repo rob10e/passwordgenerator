@@ -11,6 +11,8 @@ import {
 } from '@blueprintjs/core';
 import RandomPasswordGenerator from './../utils/RandomPasswordGenerator';
 
+// TODO: Add more constrain checking
+
 class RandomGenerator extends Component {
   constructor(props) {
     super(props);
@@ -61,6 +63,10 @@ class RandomGenerator extends Component {
             <NumericInput
               disabled={!this.state.byLength}
               value={this.state.length}
+              min={5}
+              max={80}
+              clampValueOnBlur
+              minorStepSize={1}
               onValueChange={value =>
                 this.setState({
                   length: value,
@@ -85,6 +91,9 @@ class RandomGenerator extends Component {
             <NumericInput
               disabled={!this.state.byEntropy}
               value={this.state.entropy}
+              min={30}
+              max={4096}
+              clampValueOnBlur
               onValueChange={value =>
                 this.setState({
                   entropy: value,
@@ -147,8 +156,9 @@ class RandomGenerator extends Component {
             />
           </div>
           <div className="pt-control-group pt-vertical" style={{ width: '10%' }}>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 uppercase character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 uppercase character">
               <Checkbox
+                disabled={!this.state.upperCase}
                 checked={this.state.upperCaseMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -156,8 +166,9 @@ class RandomGenerator extends Component {
                 }}
               />
             </Tooltip>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 lowercase character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 lowercase character">
               <Checkbox
+                disabled={!this.state.lowerCase}
                 checked={this.state.lowerCaseMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -165,8 +176,9 @@ class RandomGenerator extends Component {
                 }}
               />
             </Tooltip>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 numeric character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 numeric character">
               <Checkbox
+                disabled={!this.state.digits}
                 checked={this.state.digitMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -174,8 +186,9 @@ class RandomGenerator extends Component {
                 }}
               />
             </Tooltip>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 minus character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 minus character">
               <Checkbox
+                disabled={!this.state.minus}
                 checked={this.state.minusMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -183,8 +196,9 @@ class RandomGenerator extends Component {
                 }}
               />
             </Tooltip>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 underline character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 underline character">
               <Checkbox
+                disabled={!this.state.underline}
                 checked={this.state.underlineMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -236,8 +250,9 @@ class RandomGenerator extends Component {
             />
           </div>
           <div className="pt-control-group pt-vertical" style={{ width: '10%' }}>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 space character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 space character">
               <Checkbox
+                disabled={!this.state.space}
                 checked={this.state.spaceMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -245,8 +260,9 @@ class RandomGenerator extends Component {
                 }}
               />
             </Tooltip>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 special character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 special character">
               <Checkbox
+                disabled={!this.state.special}
                 checked={this.state.specialMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -254,8 +270,9 @@ class RandomGenerator extends Component {
                 }}
               />
             </Tooltip>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 bracket character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 bracket character">
               <Checkbox
+                disabled={!this.state.brackets}
                 checked={this.state.bracketMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -263,8 +280,9 @@ class RandomGenerator extends Component {
                 }}
               />
             </Tooltip>
-            <Tooltip position={Position.RIGHT} content="Ensure at least 1 high ANSI character">
+            <Tooltip className="tooltip-fix" position={Position.TOP} content="Ensure at least 1 high ANSI character">
               <Checkbox
+                disabled={!this.state.highAnsi}
                 checked={this.state.highAnsiMinimum}
                 onChange={(event) => {
                   event.persist();
@@ -290,7 +308,9 @@ class RandomGenerator extends Component {
         </FormGroup>
         <Button
           text="Generate"
-          onClick={() => this.props.onGenerate(this.passwordGenerator.generateBasic(this.state))}
+          onClick={() => {
+            this.props.onGenerate(this.passwordGenerator.generateBasic(this.state));
+          }}
         />
       </div>
     );

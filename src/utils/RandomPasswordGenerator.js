@@ -55,22 +55,45 @@ export default class RandomPasswordGenerator {
     }
   }
 
-  count(phrase, list) {
-    let count = 0;
+  atLeastOne(phrase, list) {
     for (let index = 0; index < phrase.length; index++) {
       const character = phrase[index];
-      if (_.includes(list, character)) count++;
+      if (_.includes(list, character)) return true;
     }
 
-    return count;
+    return false;
   }
 
   checkMinimums(password) {
     let result = true;
-
-    result &= (this.options.upperCaseMinimum && this.count(password, this.upperCase) > 0);
-
-    return result;
+    if (this.options.upperCaseMinimum && this.options.upperCase) {
+      result = result && this.atLeastOne(password, this.upperCase);
+    }
+    if (this.options.lowerCaseMinimum && this.options.lowerCase) {
+      result = result && this.atLeastOne(password, this.lowerCase);
+    }
+    if (this.options.bracketMinimum && this.options.brackets) {
+      result = result && this.atLeastOne(password, this.brackets);
+    }
+    if (this.options.digitMinimum && this.options.digits) {
+      result = result && this.atLeastOne(password, this.digits);
+    }
+    if (this.options.highAnsiMinimum && this.options.highAnsi) {
+      result = result && this.atLeastOne(password, this.highAnsi);
+    }
+    if (this.options.specialMinimum && this.options.special) {
+      result = result && this.atLeastOne(password, this.special);
+    }
+    if (this.options.spaceMinimum && this.options.space) {
+      result = result && this.atLeastOne(password, this.space);
+    }
+    if (this.options.minusMinimum && this.options.minus) {
+      result = result && this.atLeastOne(password, this.minus);
+    }
+    if (this.options.underlineMinimum && this.options.underline) {
+      result = result && this.atLeastOne(password, this.underscore);
+    }
+    return !result;
   }
 
   generateBasic = (options) => {
@@ -118,6 +141,7 @@ export default class RandomPasswordGenerator {
       }
     }
 
+    let attempts = 0;
     let password;
     let message;
     do {
@@ -163,7 +187,15 @@ export default class RandomPasswordGenerator {
           } symbols. \u00a0Entropy = ${entropyString} bits`;
         }
       }
-    } while (this.checkMinimums(password));
+      attempts++;
+    } while (attempts <= 1000 || this.checkMinimums(password));
+    if (attempts === 1000) {
+      return {
+        password: '',
+        message: 'Could not ensure minimums. Select higher constraints.',
+        score: null,
+      };
+    }
     return { password, message, score: passwordScore(password, { minchar: 10 }) };
   };
 }

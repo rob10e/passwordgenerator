@@ -13,13 +13,22 @@ textarea {
 	-webkit-app-region: no-drag;
 }
 
+/* .tooltip-fix.pt-transition-container{
+  margin-top: inherit;
+  margin-left: -18px;
+} */
+
 .pt-navbar .pt-navbar-group .pt-button .pt-icon-standard{
   margin-right: 0;
 }
 
-.pt-transition-container {
-  margin-top: 18px;
+.tooltip-fix {
+  width: 13px!important;
 }
+
+/* .pt-transition-container {
+  margin-top: 18px;
+} */
 
 .root {
   min-height: 100vh;
