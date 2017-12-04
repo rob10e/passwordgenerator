@@ -14,8 +14,10 @@ import {
 import { connect } from 'react-redux';
 import { copy } from 'copy-paste';
 import OurToaster from './Toaster';
-import RandomGenerator from './RandomGenerator';
+import RandomGenerator from './Generators/RandomGenerator';
+import PronounceableGenerator from './Generators/PronounceableGenerator';
 import { updateGeneratorOptions } from './Redux/currentOptionsActions';
+import strengths from '../utils/passwordStrengths';
 
 class MainPage extends Component {
   constructor() {
@@ -26,21 +28,17 @@ class MainPage extends Component {
       score: 0,
     };
     this.generator = null;
-    this.messages = [
-      'Unsafe password word!',
-      'Too short',
-      'Very weak',
-      'Weak',
-      'Medium',
-      'Strong',
-      'Very strong',
-    ];
     this.colors = ['DANGER', 'DANGER', 'WARNING', 'WARNING', 'PRIMARY', 'PRIMARY', 'SUCCESS'];
     this.generators = [
       {
         label: 'Random',
         value: 'random',
         index: 0,
+      },
+      {
+        label: 'Pronounceable',
+        value: 'pronounceable',
+        index: 1,
       },
     ];
   }
@@ -49,6 +47,8 @@ class MainPage extends Component {
     switch (this.props.currentGenerator) {
       case 'random':
         return <RandomGenerator onGenerate={results => this.setState(results)} />;
+      case 'pronounceable':
+        return <PronounceableGenerator onGenerate={results => this.setState(results)} />;
       default:
         return null;
     }
@@ -82,7 +82,7 @@ class MainPage extends Component {
                   <div>
                     {this.state.score.strength && (
                       <Tag className={Classes.MINIMAL}>
-                        {this.messages[this.state.score.strength]}
+                        {strengths[this.state.score.strength]}
                       </Tag>
                     )}
                     <Tooltip position={Position.TOP} content="Copy to clipboard">

@@ -1,3 +1,5 @@
+// Source: https://www.nayuki.io/page/random-password-generator-javascript
+
 import _ from 'lodash';
 import passwordScore from './PasswordStrengthTester';
 
@@ -196,6 +198,6 @@ export default class RandomPasswordGenerator {
         score: null,
       };
     }
-    return { password, message, score: passwordScore(password, { minchar: 10 }) };
+    return { password, message, score: passwordScore(password, { minchar: 8 }) };
   };
 }

@@ -1,3 +1,4 @@
+
 .pt-navbar {
   -ms-overflow-style: scrollbar;
   -webkit-app-region:drag;
@@ -9,6 +10,11 @@ input[type="button"],
 input[type="text"],
 select,
 button,
+.react-selectize,
+/* .react-selectize-control,
+.react-selectize-search-field-and-selected-values,
+.react-selectize-reset-button-container,
+.react-selectize-toggle-button-container, */
 textarea {
 	-webkit-app-region: no-drag;
 }
@@ -18,6 +24,11 @@ textarea {
   margin-left: -18px;
 } */
 
+.profile-input{
+  min-width: 200px;
+  padding-left: 10px;
+}
+
 .pt-navbar .pt-navbar-group .pt-button .pt-icon-standard{
   margin-right: 0;
 }
@@ -26,9 +37,9 @@ textarea {
   width: 13px!important;
 }
 
-/* .pt-transition-container {
-  margin-top: 18px;
-} */
+.pt-tether-element-attached-top.pt-tether-target-attached-bottom > .pt-popover.dropdown-adjust {
+  margin-top: 5px!important;
+}
 
 .root {
   min-height: 100vh;

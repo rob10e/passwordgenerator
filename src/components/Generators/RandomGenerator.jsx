@@ -12,8 +12,9 @@ import {
   Tooltip,
   Position,
 } from '@blueprintjs/core';
-import RandomPasswordGenerator from './../utils/RandomPasswordGenerator';
-import { updateGeneratorOptions } from './Redux/currentOptionsActions';
+import RandomPasswordGenerator from '../../utils/RandomPasswordGenerator';
+import { updateGeneratorOptions } from '../Redux/currentOptionsActions';
+
 
 // TODO: Add more constrain checking
 
@@ -326,7 +327,9 @@ class RandomGenerator extends Component {
             }}
           />
         </FormGroup>
+        <hr />
         <Button
+          className="pt-fill"
           text="Generate"
           onClick={() => {
             this.props.onGenerate(this.passwordGenerator.generateBasic(options));

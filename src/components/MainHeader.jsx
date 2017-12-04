@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { remote } from 'electron';
-import { Button, Icon, InputGroup, Tooltip, Position } from '@blueprintjs/core';
+import {
+  Button,
+  Icon,
+  InputGroup,
+  Tooltip,
+  Position,
+  Menu,
+  MenuItem,
+  MenuDivider,
+  Popover,
+} from '@blueprintjs/core';
 import OurToaster from './Toaster';
-import { addNewProfile } from './Redux/profilesActions';
+import { addNewProfile, toggleFavorite, deleteProfile } from './Redux/profilesActions';
 import { selectProfile } from './Redux/currentOptionsActions';
 
 class MainHeader extends Component {
@@ -23,6 +33,37 @@ class MainHeader extends Component {
     this.props.selectProfile(profile.profile, profile.generatorName, profile.options);
   }
 
+  menu = (
+    <Menu>
+      {this.props.profiles.map(item => (
+        <MenuItem
+          key={item.guid}
+          iconName={`star${item.favorite ? '' : '-empty'}`}
+          text={item.profile}
+          onClick={(event) => {
+            event.persist();
+            const profileName = event.target.text;
+            this.getProfile(profileName);
+          }}
+        >
+          <MenuItem
+            iconName="star"
+            text="Make Favorite"
+            onClick={() => this.props.toggleFavorite(item.profile)}
+          />
+          <MenuItem
+            iconName="cross"
+            text="Delete Profile"
+            onClick={() => {
+              this.props.deleteProfile(item.profile);
+              OurToaster.show(`${item.profile} was deleted`);
+            }}
+          />
+        </MenuItem>
+      ))}
+    </Menu>
+  );
+
   handleSaveProfile() {
     const profile = this.state.profileNewName;
     this.props.addNewProfile(profile, this.props.current.generatorName, this.props.current.options);
@@ -38,7 +79,7 @@ class MainHeader extends Component {
       return (
         <InputGroup
           type="text"
-          className="pt-minimal"
+          className="pt-minimal profile-input"
           value={this.state.profileNewName}
           onChange={(event) => {
             event.persist();
@@ -46,6 +87,14 @@ class MainHeader extends Component {
           }}
           rightElement={
             <div>
+              <Tooltip position={Position.BOTTOM} content="Cancel">
+                <Button
+                  className="pt-minimal"
+                  onClick={() => this.setState({ profileEditMode: false })}
+                >
+                  <Icon iconName="cross" />
+                </Button>
+              </Tooltip>
               <Tooltip position={Position.BOTTOM} content="Save">
                 <Button className="pt-minimal" onClick={() => this.handleSaveProfile()}>
                   Save
@@ -57,29 +106,19 @@ class MainHeader extends Component {
       );
     }
     return (
-      <div className="pt-select pt-minimal">
-        <select
-          className="select-as-h5 select-margin"
-          style={{ width: 200, color: 'inherit' }}
-          onChange={(event) => {
-            event.persist();
-            const profileName = event.target.value;
-            this.getProfile(profileName);
-          }}
-          value={this.props.current.profile}
+      <Tooltip position={Position.LEFT} content="Select Profile">
+        <Popover
+          popoverClassName="pt-minimal dropdown-adjust"
+          content={this.menu}
+          position={Position.BOTTOM_RIGHT}
         >
-          <option key="default" value="default">
-            -- Select profile --
-          </option>
-          {this.props.profiles.length > 0
-            ? this.props.profiles.map(item => (
-              <option key={`${item.profile}_key`} value={item.profile}>
-                {`${item.profile}`}
-              </option>
-              ))
-            : null}
-        </select>
-      </div>
+          <Button
+            rightIconName="caret-down"
+            className="pt-minimal"
+            text={this.props.current.profile}
+          />
+        </Popover>
+      </Tooltip>
     );
   }
 
@@ -134,6 +173,8 @@ MainHeader.propTypes = {
   ),
   addNewProfile: PropTypes.func.isRequired,
   selectProfile: PropTypes.func.isRequired,
+  toggleFavorite: PropTypes.func.isRequired,
+  deleteProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -141,4 +182,9 @@ const mapStateToProps = state => ({
   current: state.currentOptions,
 });
 
-export default connect(mapStateToProps, { addNewProfile, selectProfile })(MainHeader);
+export default connect(mapStateToProps, {
+  addNewProfile,
+  selectProfile,
+  toggleFavorite,
+  deleteProfile,
+})(MainHeader);

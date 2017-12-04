@@ -1,8 +1,8 @@
 // import { combineReducers } from 'redux';
 import { persistCombineReducers } from 'redux-persist';
+import createElectronStorage from 'redux-persist-electron-storage';
 import currentOptionsReducer from '../components/Redux/currentOptionsReducer';
 import profilesReducer from '../components/Redux/profilesReducer';
-import createElectronStorage from 'redux-persist-electron-storage';
 
 const config = {
   key: 'root',

@@ -1,7 +1,8 @@
 import { UPDATE_CURRENT_OPTIONS, SELECT_PROFILE } from './currentOptionsActions';
-import randomDefault, { randomDefaultOptions } from './Defaults/randomGeneratorDefaults';
+import randomDefaultOptions from './Defaults/randomGeneratorDefaults';
+import pronounceableDefaultOptions from './Defaults/pronounceableGeneratorDefaults';
 
-const initialState = { ...randomDefault };
+const initialState = { ...randomDefaultOptions, profile: 'Default' };
 
 const currentOptionsReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -14,11 +15,9 @@ const currentOptionsReducer = (state = initialState, action) => {
       if (payload.options === null || payload.options === undefined) {
         switch (payload.generatorName) {
           case 'random':
-            return Object.assign({}, state, {
-              profile: '',
-              generatorName,
-              options: randomDefaultOptions,
-            });
+            return randomDefaultOptions;
+          case 'pronounceable':
+            return pronounceableDefaultOptions;
           default:
             return Object.assign({}, state, {
               profile: '',

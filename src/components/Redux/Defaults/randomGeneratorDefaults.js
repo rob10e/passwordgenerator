@@ -26,7 +26,14 @@ export const options = {
 
 const randomGeneratorDefault = {
   generatorName: 'random',
+  profile: '',
+  options,
+};
+
+export const randomGeneratorProfileDefault = {
+  generatorName: 'random',
   profile: 'Default',
+  guid: '4e3d9fdc-819f-474b-887b-48ec561ce2e7',
   options,
 };
 
