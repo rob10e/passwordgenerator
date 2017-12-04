@@ -13,7 +13,14 @@ class MainHeader extends Component {
     this.state = {
       profileEditMode: false,
       profileNewName: '',
+      currentProfile: 'Default',
     };
+    this.profileChange = false;
+  }
+
+  getProfile(profileName) {
+    const profile = this.props.profiles.filter(item => item.profile === profileName)[0];
+    this.props.selectProfile(profile.profile, profile.generatorName, profile.options);
   }
 
   handleSaveProfile() {
@@ -22,6 +29,7 @@ class MainHeader extends Component {
     this.setState({
       profileEditMode: false,
     });
+
     OurToaster.show({ message: `Saved new profile: ${profile}` });
   }
 
@@ -53,16 +61,20 @@ class MainHeader extends Component {
         <select
           className="select-as-h5 select-margin"
           style={{ width: 200, color: 'inherit' }}
-          onChange={event => this.setState({ currentProfile: event.target.value })}
-          value={this.state.currentProfile}
+          onChange={(event) => {
+            event.persist();
+            const profileName = event.target.value;
+            this.getProfile(profileName);
+          }}
+          value={this.props.current.profile}
         >
           <option key="default" value="default">
             -- Select profile --
           </option>
           {this.props.profiles.length > 0
             ? this.props.profiles.map(item => (
-              <option key={`${item}_key`} value={item}>
-                {`${item}`}
+              <option key={`${item.profile}_key`} value={item.profile}>
+                {`${item.profile}`}
               </option>
               ))
             : null}
@@ -77,7 +89,7 @@ class MainHeader extends Component {
     return (
       <nav className="pt-navbar">
         <div className="pt-navbar-group pt-align-left">
-          <div className="pt-navbar-heading">Password Generator</div>
+          <div className="pt-navbar-heading">All Password Generator</div>
         </div>
         <div className="pt-navbar-group pt-align-right">
           <Tooltip position={Position.BOTTOM} content="Add new profile">

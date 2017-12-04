@@ -1,7 +1,7 @@
 import { UPDATE_CURRENT_OPTIONS, SELECT_PROFILE } from './currentOptionsActions';
 import randomDefault, { randomDefaultOptions } from './Defaults/randomGeneratorDefaults';
 
-const initialState = { ...randomDefault, profileName: randomDefault.profileName };
+const initialState = { ...randomDefault };
 
 const currentOptionsReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -15,21 +15,21 @@ const currentOptionsReducer = (state = initialState, action) => {
         switch (payload.generatorName) {
           case 'random':
             return Object.assign({}, state, {
-              profileName: '',
+              profile: '',
               generatorName,
               options: randomDefaultOptions,
             });
           default:
             return Object.assign({}, state, {
-              profileName: '',
+              profile: '',
               generatorName,
               options: {},
             });
         }
       }
-      return Object.assign({}, state, { profileName: '', generatorName, options: payload.options });
+      return Object.assign({}, state, { profile: '', generatorName, options: payload.options });
     case SELECT_PROFILE:
-      return Object.assign({}, state, ...payload);
+      return payload;
     default:
       return state;
   }

@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 
 /* eslint-disable no-underscore-dangle */
-const enhancer = compose(
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhancer = composeEnhancers(
   // Middleware you want to use in development:
-  // applyMiddleware(d1, d2, d3),
+  applyMiddleware(thunk),
 );
 /* eslint-enable */
 

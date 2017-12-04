@@ -26,6 +26,7 @@ export const options = {
 
 const randomGeneratorDefault = {
   generatorName: 'random',
+  profile: 'Default',
   options,
 };
 

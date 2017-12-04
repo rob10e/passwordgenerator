@@ -3,8 +3,7 @@ import randomDefault from './Defaults/randomGeneratorDefaults';
 
 const initialState = [
   {
-    randomDefault,
-    profileName: 'Default',
+    ...randomDefault,
   },
 ];
 

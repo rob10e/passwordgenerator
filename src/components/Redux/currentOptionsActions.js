@@ -6,7 +6,7 @@ export const updateGeneratorOptions = (generatorName, options) => ({
   payload: { generatorName, options },
 });
 
-export const selectProfile = (profileName, generatorName, options) => ({
+export const selectProfile = (profile, generatorName, options) => ({
   type: SELECT_PROFILE,
-  payload: { profileName, generatorName, options },
+  payload: { profile, generatorName, options },
 });
