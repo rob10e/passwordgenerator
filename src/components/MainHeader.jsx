@@ -56,7 +56,7 @@ class MainHeader extends Component {
             text="Delete Profile"
             onClick={() => {
               this.props.deleteProfile(item.profile);
-              OurToaster.show(`${item.profile} was deleted`);
+              OurToaster.show({ message: `${item.profile} was deleted` });
             }}
           />
         </MenuItem>
