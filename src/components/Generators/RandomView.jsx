@@ -7,18 +7,17 @@ import {
   Switch,
   NumericInput,
   InputGroup,
-  Button,
   Checkbox,
   Tooltip,
   Position,
 } from '@blueprintjs/core';
-import RandomPasswordGenerator from '../../utils/RandomPasswordGenerator';
+import RandomPasswordGenerator from '../../utils/random';
 import { updateGeneratorOptions } from '../Redux/currentOptionsActions';
 
 
 // TODO: Add more constrain checking
 
-class RandomGenerator extends Component {
+class RandomView extends Component {
   constructor(props) {
     super(props);
     this.passwordGenerator = new RandomPasswordGenerator();
@@ -328,20 +327,12 @@ class RandomGenerator extends Component {
           />
         </FormGroup>
         <hr />
-        <Button
-          className="pt-fill"
-          text="Generate"
-          onClick={() => {
-            this.props.onGenerate(this.passwordGenerator.generateBasic(options));
-          }}
-        />
       </div>
     );
   }
 }
 
-RandomGenerator.propTypes = {
-  onGenerate: PropTypes.func.isRequired,
+RandomView.propTypes = {
   updateGeneratorOptions: PropTypes.func.isRequired,
   options: PropTypes.shape({
     brackets: PropTypes.bool,
@@ -374,4 +365,4 @@ const mapStateToProps = state => ({
   options: state.currentOptions.options,
 });
 
-export default connect(mapStateToProps, { updateGeneratorOptions })(RandomGenerator);
+export default connect(mapStateToProps, { updateGeneratorOptions })(RandomView);

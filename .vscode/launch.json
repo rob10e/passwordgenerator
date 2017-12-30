@@ -5,16 +5,44 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}"
+    },
+    {
       "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "port": 9229
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach by Process ID",
+      "processId": "${command:PickProcess}"
+    },
+    {
+      "type": "chrome",
       "request": "launch",
       "name": "Electron Main",
+      "port": 9222,
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron-forge-vscode-nix",
       "windows": {
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron-forge-vscode-win.cmd"
       },
       // runtimeArgs will be passed directly to your Electron application
-      "runtimeArgs": ["foo", "bar"],
-      "cwd": "${workspaceRoot}"
-    }
+      "runtimeArgs": [
+        "${workspaceRoot}",
+        "--enable-logging",
+        "--remote-debugging-port=9222"
+      ],
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "NODE_ENV":"development"
+      },
+      "sourceMaps": false
+    },
   ]
 }

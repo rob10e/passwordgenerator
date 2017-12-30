@@ -34,7 +34,7 @@
           "transform-es2015-spread",
           "transform-object-rest-spread"
         ],
-        "sourceMaps": "inline"
+        "sourceMaps": "both"
       },
       "production": {
         "presets": [

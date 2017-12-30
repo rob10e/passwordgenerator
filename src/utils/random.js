@@ -1,7 +1,7 @@
 // Source: https://www.nayuki.io/page/random-password-generator-javascript
 
 import _ from 'lodash';
-import passwordScore from './PasswordStrengthTester';
+import passwordScore from './passwordStrengthTester';
 
 export default class RandomPasswordGenerator {
   constructor() {
@@ -98,7 +98,7 @@ export default class RandomPasswordGenerator {
     return !result;
   }
 
-  generateBasic = (options) => {
+  generate = (options) => {
     this.options = options;
     let characterSetString = '';
     if (options.brackets) characterSetString += this.brackets;

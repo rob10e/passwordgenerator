@@ -9,7 +9,6 @@ import storeCreator from './Redux/store';
 const creator = storeCreator({});
 const store = creator.store;
 const persistor = creator.persistor;
-debugger;
 const render = () => {
   // NB: We have to re-require MyApp every time or else this won't work
   // We also need to wrap our app in the AppContainer class
