@@ -30,7 +30,7 @@ class RandomView extends Component {
   render() {
     const options = this.props.options;
     return (
-      <div>
+      <div style={{ flex: '0 0 auto' }}>
         <FormGroup inline className="formgroup-no-label">
           <div className="pt-control-group pt-fill">
             <Switch

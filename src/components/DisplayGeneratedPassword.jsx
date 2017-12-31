@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   FormGroup,
@@ -17,7 +17,7 @@ import strengths from './../utils/passwordStrengths';
 const colors = ['DANGER', 'DANGER', 'WARNING', 'WARNING', 'PRIMARY', 'PRIMARY', 'SUCCESS'];
 
 const DisplayGeneratedPassword = props => (
-  <div>
+  <div style={{ flex: '0 0 auto' }}>
     <FormGroup label={'Generated Password'} labelFor="text-input">
       <InputGroup
         intent={Intent[colors[props.score.strength]]}

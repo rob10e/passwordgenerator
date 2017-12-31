@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { updateGeneratorOptions } from './Redux/currentOptionsActions';
 
 const GeneratorSelector = props => (
-  <div>
+  <div style={{ flex: '0 0 auto' }}>
     <div className="pt-select pt-minimal pt-fill">
       <select
         className="select-as-h5"

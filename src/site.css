@@ -4,6 +4,10 @@
   -webkit-app-region:drag;
 }
 
+/* body, .pt-card, .no-overflow{
+  overflow: hidden;
+} */
+
 input[type="submit"],
 input[type="reset"],
 input[type="button"],

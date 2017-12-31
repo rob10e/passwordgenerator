@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import { connect } from 'react-redux';
+
 import DisplayGeneratedPassword from './DisplayGeneratedPassword';
 import GeneratorSelector from './GeneratorSelector';
 import strengths from './../utils/passwordStrengths';
@@ -12,16 +13,26 @@ class GeneratorControls extends Component {
     generator: null,
     results: null,
     passwordList: [],
+    height: 0,
   };
 
   componentWillMount() {
     this.setGenerator();
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', () => this.updateDimensions());
+    this.updateDimensions();
+  }
+
   componentDidUpdate(nextProps) {
     if (this.props.currentGenerator !== nextProps.currentGenerator) {
       this.setGenerator();
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.updateDimensions());
   }
 
   setGenerator() {
@@ -41,6 +52,11 @@ class GeneratorControls extends Component {
     });
   }
 
+  updateDimensions() {
+    const height = document.getElementById('app').clientHeight - 540;
+    this.setState({ height });
+  }
+
   generate() {
     if (!this.state.activeGenerator) return;
     const results = this.state.generator.generate(this.props.currentOptions);
@@ -58,22 +74,24 @@ class GeneratorControls extends Component {
   renderPasswordList() {
     if (this.state.passwordList && this.state.passwordList.length > 0) {
       return (
-        <table className="pt-table pt-interactive pt-condensed" style={{ width: '100%' }}>
-          <thead>
-            <tr>
-              <th>Password</th>
-              <th>Strength</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.passwordList.map(item => (
-              <tr key={`${item.password}_id`} onClick={() => this.selectFromList(item)}>
-                <td>{item.password}</td>
-                <td>{strengths[item.score.strength]}</td>
+        <div style={{ overflowY: 'auto', maxHeight: this.state.height, margin: '20px 0' }}>
+          <table className="pt-table pt-interactive pt-condensed" style={{ width: '100%' }}>
+            <thead>
+              <tr>
+                <th>Password</th>
+                <th>Strength</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.state.passwordList.map(item => (
+                <tr key={`${item.password}_id`} onClick={() => this.selectFromList(item)}>
+                  <td>{item.password}</td>
+                  <td>{strengths[item.score.strength]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       );
     }
     return null;
@@ -81,7 +99,7 @@ class GeneratorControls extends Component {
 
   render() {
     return (
-      <div>
+      <div id="generatorControl">
         <GeneratorSelector {...this.props} {...this.state.results} />
         <hr />
         <div style={{ marginTop: 20 }}>
@@ -106,6 +124,7 @@ GeneratorControls.propTypes = {
     }),
   ).isRequired,
   currentGenerator: PropTypes.string.isRequired,
+  /* eslint-disable */
   currentOptions: PropTypes.object.isRequired,
 };
 

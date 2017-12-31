@@ -102,6 +102,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.2.0",
     "react-dom-factories": "^1.0.2",
+    "react-height": "^3.0.0",
     "react-hot-loader": "^3.0.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",

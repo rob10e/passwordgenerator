@@ -27,7 +27,7 @@ class MainPage extends Component {
 
   render() {
     return (
-      <div style={{ margin: '0 auto', width: 600, padding: 50 }}>
+      <div style={{ margin: '0 auto', width: 600, padding: '50px 50px 0 50px' }}>
         <Card elevation={2}>
           <GeneratorControls generators={this.generators} />
         </Card>

@@ -5,7 +5,7 @@ import { FormGroup, NumericInput } from '@blueprintjs/core';
 import { options as defaults } from '../Redux/Defaults/pronounceableGeneratorDefaults';
 
 const PronounceableView = props => (
-  <div>
+  <div style={{ flex: '0 0 auto' }}>
     <FormGroup inline className="formgroup-no-label">
       <div className="pt-control-group pt-fill">
         <label htmlFor="length">Length:</label>
