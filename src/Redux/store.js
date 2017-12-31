@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore } from 'redux-persist';
 //import createElectronStorage from 'redux-persist-electron-storage';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import rootReducer from './rootReducer';
 
 // const config = {
@@ -15,7 +16,7 @@ import rootReducer from './rootReducer';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(
   // Middleware you want to use in development:
-  applyMiddleware(thunk),
+  applyMiddleware(thunk, logger),
 );
 /* eslint-enable */
 
