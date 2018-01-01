@@ -1,4 +1,5 @@
 export const options = {
+  useWrappers: true,
 };
 
 const symbolReplaceGeneratorDefault = {

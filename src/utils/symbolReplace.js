@@ -38,6 +38,9 @@ export default class SymbolReplaceGenerator {
     z: ['z'],
     ' ': ['_', '-', '=', ':'],
   };
+
+  wrappers = [['*', '*'], ['[', ']'], ['{', '}'], ['-', '-'], ['-*', '*-']];
+
   generate = (options) => {
     let inputString = options.inputString.toLowerCase();
     let password = inputString;
@@ -62,7 +65,7 @@ export default class SymbolReplaceGenerator {
           // It is, so skip
           passwordIndex += 2;
           index++;
-          continue;        
+          continue;
         }
         // It's not, so remove it.
         password = replaceAt(password, passwordIndex, '');
@@ -87,8 +90,15 @@ export default class SymbolReplaceGenerator {
       password = replaceAt(password, passwordIndex, choice);
       passwordIndex += choice.length;
     }
-
-    const message = `Length: ${password.length}`;
+    let wrapper;
+    if (options.useWrappers) {
+      wrapper = this.wrappers[Math.floor(Math.random() * this.wrappers.length)];
+      password = wrapper[0] + password + wrapper[1];
+    }
+    let message = `Length: ${password.length}`;
+    if (wrapper) {
+      message += `, Wrappers: (${wrapper[0]}, ${wrapper[1]})`;
+    }
 
     return { password, message, score: passwordScore(password, { minchar: 15 }) };
   };

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, InputGroup } from '@blueprintjs/core';
+import { FormGroup, InputGroup, Switch } from '@blueprintjs/core';
 import { connect } from 'react-redux';
-import { options as defaults } from '../Redux/Defaults/pronounceableGeneratorDefaults';
+import { options as defaults } from '../Redux/Defaults/symbolReplaceGeneratorDefaults';
 import SymbolReplaceGenerator from '../../utils/symbolReplace';
+import { updateGeneratorOptions } from '../Redux/currentOptionsActions';
 
 class SymbolReplace extends Component {
   constructor(props) {
@@ -14,6 +15,10 @@ class SymbolReplace extends Component {
   state = {
     inputString: '',
   };
+
+  setOptions(options) {
+    this.props.updateGeneratorOptions(null, { ...this.props.options, ...options });
+  }
 
   generate(options) {
     return this.passwordGenerator.generate({ ...options, inputString: this.state.inputString });
@@ -35,6 +40,16 @@ class SymbolReplace extends Component {
             }}
           />
         </FormGroup>
+        <Switch
+          label="Use wrappers"
+          checked={this.props.options.useWrappers}
+          onChange={(event) => {
+            event.persist();
+            this.setOptions({
+              useWrappers: event.target.checked,
+            });
+          }}
+        />
         <hr />
       </div>
     );
@@ -44,12 +59,16 @@ class SymbolReplace extends Component {
 SymbolReplace.defaultProps = defaults;
 
 SymbolReplace.propTypes = {
-  setOptions: PropTypes.func,
   options: PropTypes.shape({
-    length: PropTypes.number,
-    samples: PropTypes.number,
+    useWrappers: PropTypes.bool,
   }),
-  strengths: PropTypes.arrayOf(PropTypes.string),
+  updateGeneratorOptions: PropTypes.func.isRequired,
 };
 
-export default connect(null, null, null, { withRef: true })(SymbolReplace);
+const mapStateToProps = state => ({
+  options: state.currentOptions.options,
+});
+
+export default connect(mapStateToProps, { updateGeneratorOptions }, null, { withRef: true })(
+  SymbolReplace,
+);
