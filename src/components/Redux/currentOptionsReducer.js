@@ -1,6 +1,7 @@
 import { UPDATE_CURRENT_OPTIONS, SELECT_PROFILE } from './currentOptionsActions';
 import randomDefaultOptions from './Defaults/randomGeneratorDefaults';
 import pronounceableDefaultOptions from './Defaults/pronounceableGeneratorDefaults';
+import symbolReplaceDefaultOptions from './Defaults/symbolReplaceGeneratorDefaults';
 
 const initialState = { ...randomDefaultOptions, profile: 'Default' };
 
@@ -18,6 +19,8 @@ const currentOptionsReducer = (state = initialState, action) => {
             return randomDefaultOptions;
           case 'pronounceable':
             return pronounceableDefaultOptions;
+          case 'symbolreplace':
+            return symbolReplaceDefaultOptions;
           default:
             return Object.assign({}, state, {
               profile: '',

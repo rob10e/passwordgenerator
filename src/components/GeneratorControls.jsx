@@ -16,41 +16,16 @@ class GeneratorControls extends Component {
     height: 0,
   };
 
-  componentWillMount() {
-    this.setGenerator();
-  }
-
   componentDidMount() {
     window.addEventListener('resize', () => this.updateDimensions());
     this.updateDimensions();
-  }
-
-  componentDidUpdate(nextProps) {
-    if (this.props.currentGenerator !== nextProps.currentGenerator) {
-      this.setGenerator();
-    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.updateDimensions());
   }
 
-  setGenerator() {
-    let activeGenerator;
-    let generator;
-    this.props.generators.forEach((item) => {
-      if (item.value === this.props.currentGenerator) {
-        activeGenerator = React.cloneElement(item.view);
-        generator = item.generator;
-        this.setState({
-          activeGenerator,
-          generator,
-          results: null,
-          passwordList: [],
-        });
-      }
-    });
-  }
+  generatorRef = null;
 
   updateDimensions() {
     const height = document.getElementById('app').clientHeight - 540;
@@ -58,8 +33,8 @@ class GeneratorControls extends Component {
   }
 
   generate() {
-    if (!this.state.activeGenerator) return;
-    const results = this.state.generator.generate(this.props.currentOptions);
+    if (!this.generatorRef) return;
+    const results = this.generatorRef.getWrappedInstance().generate(this.props.currentOptions);
     if (Array.isArray(results)) {
       this.setState({ passwordList: results });
     } else {
@@ -69,6 +44,21 @@ class GeneratorControls extends Component {
 
   selectFromList(results) {
     this.setState({ results });
+  }
+
+  renderGenerator() {
+    let activeGenerator;
+    this.props.generators.forEach((item) => {
+      if (item.value === this.props.currentGenerator) {
+        activeGenerator = React.cloneElement(item.generator, {
+          ref: (node) => {
+            this.generatorRef = node;
+          },
+        });
+      }
+    });
+
+    return activeGenerator;
   }
 
   renderPasswordList() {
@@ -104,7 +94,7 @@ class GeneratorControls extends Component {
         <hr />
         <div style={{ marginTop: 20 }}>
           <DisplayGeneratedPassword {...this.state.results} />
-          {this.state.activeGenerator}
+          {this.renderGenerator()}
           {this.renderPasswordList()}
           <Button className="pt-fill" text="Generate" onClick={() => this.generate()} />
         </div>
@@ -120,7 +110,6 @@ GeneratorControls.propTypes = {
       value: PropTypes.string.isRequired,
       index: PropTypes.number.isRequired,
       generator: PropTypes.object.isRequired,
-      view: PropTypes.object.isRequired,
     }),
   ).isRequired,
   currentGenerator: PropTypes.string.isRequired,

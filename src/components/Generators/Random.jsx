@@ -14,10 +14,8 @@ import {
 import RandomPasswordGenerator from '../../utils/random';
 import { updateGeneratorOptions } from '../Redux/currentOptionsActions';
 
-
-// TODO: Add more constrain checking
-
 class RandomView extends Component {
+  static displayName = 'Random View';
   constructor(props) {
     super(props);
     this.passwordGenerator = new RandomPasswordGenerator();
@@ -26,6 +24,8 @@ class RandomView extends Component {
   setOptions(options) {
     this.props.updateGeneratorOptions(null, { ...this.props.options, ...options });
   }
+
+  generate = options => this.passwordGenerator.generate(options);
 
   render() {
     const options = this.props.options;
@@ -365,4 +365,6 @@ const mapStateToProps = state => ({
   options: state.currentOptions.options,
 });
 
-export default connect(mapStateToProps, { updateGeneratorOptions })(RandomView);
+export default connect(mapStateToProps, { updateGeneratorOptions }, null, { withRef: true })(
+  RandomView,
+);

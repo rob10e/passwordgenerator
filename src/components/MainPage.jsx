@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Card } from '@blueprintjs/core';
 
 import GeneratorControls from './GeneratorControls';
-import Random from './Generators/RandomView';
-import Pronounceable from './Generators/PronounceableContainer';
-import PronounceableGenerator from '../utils/pronounceable';
-import RandomGenerator from '../utils/random';
+import Random from './Generators/Random';
+import Pronounceable from './Generators/Pronounceable';
+import SymbolReplace from './Generators/SymbolReplace';
 
 class MainPage extends Component {
   generators = [
@@ -13,15 +12,19 @@ class MainPage extends Component {
       label: 'Random',
       value: 'random',
       index: 0,
-      view: <Random />,
-      generator: new RandomGenerator(),
+      generator: <Random />,
     },
     {
       label: 'Pronounceable',
       value: 'pronounceable',
       index: 1,
-      view: <Pronounceable />,
-      generator: new PronounceableGenerator(),
+      generator: <Pronounceable />,
+    },
+    {
+      label: 'Symbol Replace (Munged)',
+      value: 'symbolreplace',
+      index: 2,
+      generator: <SymbolReplace />,
     },
   ];
 
