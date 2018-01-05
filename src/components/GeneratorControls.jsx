@@ -21,6 +21,12 @@ class GeneratorControls extends Component {
     this.updateDimensions();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.currentGenerator !== nextProps.currentGenerator) {
+      this.setState({ results: null, passwordList: [] });
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.updateDimensions());
   }

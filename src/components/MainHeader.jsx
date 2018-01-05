@@ -178,7 +178,7 @@ class MainHeader extends Component {
     return (
       <nav className="pt-navbar">
         <div className="pt-navbar-group pt-align-left">
-          <div className="pt-navbar-heading">All Password Generator</div>
+          <div className="pt-navbar-heading">All Password Generator - TenneySoftware</div>
         </div>
         <div className="pt-navbar-group pt-align-right">
           {this.renderAddProfile()}

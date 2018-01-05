@@ -1,8 +1,8 @@
 {
   "name": "passwordgenerator",
   "productName": "passwordgenerator",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "1.0.0-beta.1",
+  "description": "A cross-platform desktop password generation collection",
   "main": "src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development electron-forge start",
@@ -10,8 +10,16 @@
     "make": "electron-forge make",
     "lint": "eslint src"
   },
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/rob10e/passwordgenerator.git"
+  },
   "keywords": [],
-  "author": "rtenney",
+  "author": {
+    "name": "Robert Tenney",
+    "url": "http://www.tenneysoftware.com",
+    "email": "rtenney@tenneysoftware.com"
+  },
   "license": "MIT",
   "babel": {
     "env": {
