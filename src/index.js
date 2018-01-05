@@ -4,6 +4,7 @@ import installExtension, {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS,
 } from 'electron-devtools-installer';
+import path from 'path';
 
 enableLiveReload({ strategy: 'react-hmr' });
 // Keep a global reference of the window object, if you don't, the window will
@@ -18,6 +19,7 @@ const createWindow = () => {
     height: 700,
     minWidth: 600,
     minHeight: 700,
+    icon: path.join(__dirname, '../resources/Icon.png'),
   });
 
   // and load the index.html of the app.

@@ -86,15 +86,32 @@
       "electronWinstallerConfig": {
         "name": "passwordgenerator"
       },
-      "electronInstallerDebian": {},
+      "electronInstallerDebian": {
+        "icon": "resources/Icon.png",
+        "categories": [
+          "Utility"
+        ],
+        "homepage": "https://foo.com"
+      },
       "electronInstallerRedhat": {},
       "github_repository": {
-        "owner": "",
-        "name": ""
+        "owner": "rob10e",
+        "name": "passwordgenerator"
       },
       "windowsStoreConfig": {
         "packageName": "",
         "name": "passwordgenerator"
+      },
+      "publish_targets": {
+        "win32": [
+          "github"
+        ],
+        "darwin": [
+          "github"
+        ],
+        "linux": [
+          "github"
+        ]
       }
     }
   },
