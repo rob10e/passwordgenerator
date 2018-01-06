@@ -1,18 +1,18 @@
 {
   "name": "passwordgenerator",
-  "productName": "passwordgenerator",
+  "productName": "Password Generator",
   "version": "1.0.0-beta.1",
   "description": "A cross-platform desktop password generation collection",
   "main": "src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
+    "package": "cross-env NODE_ENV=production electron-forge package",
+    "make": "cross-env NODE_ENV=production electron-forge make",
     "lint": "eslint src"
   },
-  "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/rob10e/passwordgenerator.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rob10e/passwordgenerator.git"
   },
   "keywords": [],
   "author": {
@@ -76,8 +76,7 @@
           "zip"
         ],
         "linux": [
-          "deb",
-          "rpm"
+          "deb"
         ]
       },
       "electronPackagerConfig": {
@@ -91,7 +90,7 @@
         "categories": [
           "Utility"
         ],
-        "homepage": "https://foo.com"
+        "homepage": "http://www.tenneysoftware.com"
       },
       "electronInstallerRedhat": {},
       "github_repository": {
@@ -138,7 +137,8 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.4.0",
     "redux-persist-electron-storage": "^1.1.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "electron-devtools-installer": "^2.2.3"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",
@@ -149,7 +149,6 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "cross-env": "^5.1.1",
-    "electron-devtools-installer": "^2.2.1",
     "electron-forge": "^4.1.5",
     "electron-prebuilt-compile": "1.7.9",
     "electron-react-devtools": "^0.5.2",
@@ -157,9 +156,6 @@
     "eslint-config-airbnb": "15",
     "eslint-plugin-import": "2",
     "eslint-plugin-jsx-a11y": "5",
-    "eslint-plugin-react": "7",
-    "redux-devtools": "^3.4.1",
-    "redux-devtools-dock-monitor": "^1.1.2",
-    "redux-devtools-log-monitor": "^1.4.0"
+    "eslint-plugin-react": "7"
   }
 }
