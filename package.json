@@ -1,7 +1,7 @@
 {
   "name": "passwordgenerator",
   "productName": "Password Generator",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A cross-platform desktop password generation collection",
   "main": "src/index.js",
   "scripts": {
@@ -69,15 +69,9 @@
   "config": {
     "forge": {
       "make_targets": {
-        "win32": [
-          "squirrel"
-        ],
-        "darwin": [
-          "zip"
-        ],
-        "linux": [
-          "deb"
-        ]
+        "win32": ["squirrel"],
+        "darwin": ["zip"],
+        "linux": ["deb"]
       },
       "electronPackagerConfig": {
         "packageManager": "yarn"
@@ -87,9 +81,7 @@
       },
       "electronInstallerDebian": {
         "icon": "resources/Icon.png",
-        "categories": [
-          "Utility"
-        ],
+        "categories": ["Utility"],
         "homepage": "http://www.tenneysoftware.com"
       },
       "electronInstallerRedhat": {},
@@ -102,15 +94,9 @@
         "name": "passwordgenerator"
       },
       "publish_targets": {
-        "win32": [
-          "github"
-        ],
-        "darwin": [
-          "github"
-        ],
-        "linux": [
-          "github"
-        ]
+        "win32": ["github"],
+        "darwin": ["github"],
+        "linux": ["github"]
       }
     }
   },
