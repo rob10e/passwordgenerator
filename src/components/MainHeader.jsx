@@ -97,7 +97,7 @@ class MainHeader extends Component {
     );
   }
 
-  renderWindowControls(isMaximized) {
+  renderWindowControls(window) {
     return (
       <div>
         <span className="pt-navbar-divider" />
@@ -107,7 +107,7 @@ class MainHeader extends Component {
             onClick={() => window.minimize()}
           />
         </Tooltip>
-        <Tooltip position={Position.BOTTOM} content={isMaximized ? 'Restore' : 'Maximize'}>
+        <Tooltip position={Position.BOTTOM} content={window.isMaximized ? 'Restore' : 'Maximize'}>
           <button
             className="pt-button pt-minimal pt-icon-multi-select"
             onClick={() => {
@@ -174,7 +174,6 @@ class MainHeader extends Component {
 
   render() {
     const window = remote.getCurrentWindow();
-    const isMaximized = window.isMaximized();
     return (
       <nav className="pt-navbar">
         <div className="pt-navbar-group pt-align-left">
@@ -185,7 +184,7 @@ class MainHeader extends Component {
         <div className="pt-navbar-group pt-align-right">
           {this.renderAddProfile()}
           {this.renderProfileSelector()}
-          {this.renderWindowControls(isMaximized)}
+          {this.renderWindowControls(window)}
         </div>
       </nav>
     );

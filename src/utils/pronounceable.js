@@ -1,6 +1,6 @@
 // Source: http://multicians.org/thvv/gpw-js.html
 
-import passwordScore from './passwordStrengthTester';
+import passwordScore from './PasswordStrengthTester';
 import data from './pronounceableData';
 
 /* GPW - Generate pronounceable passwords
