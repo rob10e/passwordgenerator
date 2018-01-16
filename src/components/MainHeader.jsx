@@ -72,9 +72,12 @@ class MainHeader extends Component {
   handleSaveProfile() {
     const profile = this.state.profileNewName;
     this.props.addNewProfile(profile, this.props.current.generatorName, this.props.current.options);
+    const window = remote.getCurrentWindow();
+
     this.setState({
       profileEditMode: false,
       profileNewName: '',
+      isMaximized: window.isMaximized(),
     });
 
     OurToaster.show({ message: `Saved new profile: ${profile}` });
@@ -97,7 +100,9 @@ class MainHeader extends Component {
     );
   }
 
-  renderWindowControls(window) {
+  renderWindowControls() {
+    const window = remote.getCurrentWindow();
+
     return (
       <div>
         <span className="pt-navbar-divider" />
@@ -107,12 +112,17 @@ class MainHeader extends Component {
             onClick={() => window.minimize()}
           />
         </Tooltip>
-        <Tooltip position={Position.BOTTOM} content={window.isMaximized ? 'Restore' : 'Maximize'}>
+        <Tooltip position={Position.BOTTOM} content={this.state.isMaximized ? 'Restore' : 'Maximize'}>
           <button
             className="pt-button pt-minimal pt-icon-multi-select"
             onClick={() => {
-              if (window.isMaximized()) window.unmaximize();
-              else window.maximize();
+              if (this.state.isMaximized) {
+                window.unmaximize();
+                this.setState({ isMaximized: false });
+              } else {
+                window.maximize();
+                this.setState({ isMaximized: true });
+              }
             }}
           />
         </Tooltip>
@@ -173,7 +183,6 @@ class MainHeader extends Component {
   }
 
   render() {
-    const window = remote.getCurrentWindow();
     return (
       <nav className="pt-navbar">
         <div className="pt-navbar-group pt-align-left">
@@ -184,7 +193,7 @@ class MainHeader extends Component {
         <div className="pt-navbar-group pt-align-right">
           {this.renderAddProfile()}
           {this.renderProfileSelector()}
-          {this.renderWindowControls(window)}
+          {this.renderWindowControls()}
         </div>
       </nav>
     );

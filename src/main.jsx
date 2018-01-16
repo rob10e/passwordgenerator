@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import 'react-hot-loader/patch';
+// import 'react-hot-loader/patch';
 import storeCreator from './Redux/store';
 
 const creator = storeCreator({});
@@ -26,6 +26,6 @@ const render = () => {
 };
 
 render();
-if (module.hot) {
-  module.hot.accept(render);
-}
+// if (module.hot) {
+//   module.hot.accept(render);
+// }

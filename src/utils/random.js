@@ -1,7 +1,8 @@
 // Source: https://www.nayuki.io/page/random-password-generator-javascript
-
-import _ from 'lodash';
-import passwordScore from './PasswordStrengthTester';
+/* eslint-disable no-throw-literal, class-methods-use-this */
+// import _ from 'lodash';
+import includes from 'lodash.includes';
+import passwordScore from './passwordStrengthTester';
 
 export default class RandomPasswordGenerator {
   constructor() {
@@ -60,7 +61,7 @@ export default class RandomPasswordGenerator {
   atLeastOne(phrase, list) {
     for (let index = 0; index < phrase.length; index++) {
       const character = phrase[index];
-      if (_.includes(list, character)) return true;
+      if (includes(list, character)) return true;
     }
 
     return false;
