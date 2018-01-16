@@ -1,6 +1,6 @@
 {
-  "name": "passwordgenerator",
-  "productName": "Password Generator",
+  "name": "allpasswordgenerator",
+  "productName": "All Password Generator",
   "version": "1.0.0-beta.2",
   "description": "A cross-platform desktop password generation collection",
   "main": "src/index.js",

@@ -14,6 +14,7 @@ module.exports = {
     name: 'AllPasswordGenerator',
   },
   electronWinstallerConfig: {
+    noMsi: false,
     description: 'All Password Generator',
     setupIcon: iconFile,
     iconUrl: iconFile,
