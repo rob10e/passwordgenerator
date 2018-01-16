@@ -6,7 +6,7 @@ module.exports = {
   make_targets: {
     win32: ['squirrel', 'zip'],
     darwin: ['zip'],
-    linux: ['deb'],
+    linux: ['deb', 'zip', 'rpm'],
   },
   electronPackagerConfig: {
     packageManager: 'yarn',
@@ -20,11 +20,21 @@ module.exports = {
     loadingGif: path.resolve(__dirname, './resources/splash.gif'),
   },
   electronInstallerDebian: {
+    name: 'AllPasswordGenerator',
+    bin: 'AllPasswordGenerator',
+    productName: 'AllPasswordGenerator',
     icon: path.resolve(__dirname, './resources/Icon.png'),
-    categories: ['Utility'],
+    categories: ['Accessories', 'Utility'],
     homepage: 'http://www.tenneysoftware.com',
   },
-  electronInstallerRedhat: {},
+  electronInstallerRedhat: {
+    name: 'AllPasswordGenerator',
+    bin: 'AllPasswordGenerator',
+    productName: 'AllPasswordGenerator',
+    icon: path.resolve(__dirname, './resources/Icon.png'),
+    categories: ['Accessories', 'Utility'],
+    homepage: 'http://www.tenneysoftware.com',
+  },
   github_repository: {
     owner: 'rob10e',
     name: 'passwordgenerator',
