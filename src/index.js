@@ -1,12 +1,12 @@
 import { app, BrowserWindow } from 'electron';
-import { enableLiveReload } from 'electron-compile';
-import installExtension, {
-  REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS,
-} from 'electron-devtools-installer';
+// import { enableLiveReload } from 'electron-compile';
+// import installExtension, {
+//   REACT_DEVELOPER_TOOLS,
+//   REDUX_DEVTOOLS,
+// } from 'electron-devtools-installer';
 import path from 'path';
 
-enableLiveReload({ strategy: 'react-hmr' });
+// enableLiveReload({ strategy: 'react-hmr' });
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -19,19 +19,19 @@ const createWindow = () => {
     height: 700,
     minWidth: 600,
     minHeight: 700,
-    icon: path.join(__dirname, '../resources/Icon.png'),
+    icon: path.join(__dirname, '../resources/Icon.ico'),
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // Open the DevTools.
-  if (process.env.NODE_ENV === 'development') {
-    installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
-      .then(name => console.info(`Added Extension:  ${name}`))
-      .catch(err => console.error('An error occurred: ', err));
-    mainWindow.webContents.openDevTools();
-  }
+  // // Open the DevTools.
+  // if (process.env.NODE_ENV === 'development') {
+  //   installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+  //     .then(name => console.info(`Added Extension:  ${name}`))
+  //     .catch(err => console.error('An error occurred: ', err));
+  //   mainWindow.webContents.openDevTools();
+  // }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

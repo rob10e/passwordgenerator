@@ -1,4 +1,4 @@
-import passwordScore from './PasswordStrengthTester';
+import passwordScore from './passwordStrengthTester';
 
 function replaceAt(str, index, replacement) {
   return str.substr(0, index) + replacement + str.substr(index + 1);
