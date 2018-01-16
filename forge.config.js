@@ -22,7 +22,7 @@ module.exports = {
   electronInstallerDebian: {
     name: 'AllPasswordGenerator',
     bin: 'AllPasswordGenerator',
-    productName: 'AllPasswordGenerator',
+    productName: 'All Password Generator',
     icon: path.resolve(__dirname, './resources/Icon.png'),
     categories: ['Accessories', 'Utility'],
     homepage: 'http://www.tenneysoftware.com',
@@ -30,7 +30,7 @@ module.exports = {
   electronInstallerRedhat: {
     name: 'AllPasswordGenerator',
     bin: 'AllPasswordGenerator',
-    productName: 'AllPasswordGenerator',
+    productName: 'All Password Generator',
     icon: path.resolve(__dirname, './resources/Icon.png'),
     categories: ['Accessories', 'Utility'],
     homepage: 'http://www.tenneysoftware.com',
